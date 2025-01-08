@@ -1,56 +1,37 @@
-
-
-
 <?php
 session_start();
-include('db_config.php');
-
-// Debugging: Check if the session is working
-if (session_id() == '') {
-    echo "Session not started.<br>";
-} else {
-    echo "Session started.<br>";
-}
+include('db_config.php'); // Ensure this file establishes a PDO connection as $pdo
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Debugging: Check POST data
-    var_dump($_POST);
+    // Retrieve the word from the form
+    $word = $_POST['word'];
 
-    // Retrieve the word from the form and sanitize
-    $word = mysqli_real_escape_string($conn, $_POST['word']); 
+    try {
+        // Use a prepared statement to safely query the database
+        $stmt = $pdo->prepare("SELECT definition FROM words WHERE word = :word");
+        $stmt->execute(['word' => $word]);
 
-    // Perform the query
-    $sql = "SELECT definition FROM words WHERE word = '$word'";
-    $result = $conn->query($sql);
+        // Check if the word exists in the dictionary
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $definition = "Definition of '$word': " . htmlspecialchars($row['definition']);
+        } else {
+            $definition = "Word not found in the dictionary.";
+        }
 
-    // Check if query is successful
-    if ($result === false) {
-        echo "Query failed: " . $conn->error;
+        // Store result in session and redirect
+        $_SESSION['definition'] = $definition;
+        header("Location: index.php");
         exit;
+    } catch (PDOException $e) {
+        die("Database query failed: " . $e->getMessage());
     }
-
-    // Prepare the result message
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $definition = "Definition of '$word': " . $row['definition'];
-    } else {
-        $definition = "Word not found in the dictionary.";
-    }
-
-    // Store result in session and redirect
-    $_SESSION['definition'] = $definition;
-
-    // Debugging: Check session data
-    var_dump($_SESSION);
-
-    header("Location: index.php");
-    exit;
 }
 
-// Check if result is available in session after redirect
-if (isset($_SESSION['definition'])) {
-    $message = $_SESSION['definition'];
+// Display result after redirect
+$message = $_SESSION['definition'] ?? null;
+if ($message) {
     unset($_SESSION['definition']); // Clear session after displaying
 }
 ?>
@@ -61,9 +42,9 @@ if (isset($_SESSION['definition'])) {
     <input type="submit" value="Submit">
 </form>
 
-<!-- Display result after redirect -->
+<!-- Display result -->
 <?php
-if (isset($message)) {
+if ($message) {
     echo $message;
 }
 ?>
