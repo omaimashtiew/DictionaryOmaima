@@ -1,5 +1,5 @@
 <?php
-$host = 'db';
+$host = 'db:3306';
 $dbname = 'dictionary';
 $username = 'root'; 
 $password = 'nadeen';  
