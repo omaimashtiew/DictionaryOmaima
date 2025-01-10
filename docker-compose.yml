@@ -18,7 +18,7 @@ services:
     volumes:
       - ./database.txt:/docker-entrypoint-initdb.d/init.sql
     environment:
-      MYSQL_ROOT_PASSWORD: nadeen #Use environment variable
+      MYSQL_ROOT_PASSWORD: nadeen # Use environment variable
 
   phpmyadmin:
     image: phpmyadmin

@@ -7,5 +7,5 @@ WORKDIR /var/www/html
 COPY . /var/www/html/
 
 EXPOSE 81
-# original command apachectl -D FOREGROUND will not wotk use full path of /usr/sbin/apache2ctl
+# original command apachectl -D FOREGROUND will not wotk use full path of /usr/sbin/apache2ctl 
 CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
