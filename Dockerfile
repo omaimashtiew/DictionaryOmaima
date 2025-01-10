@@ -1,11 +1,11 @@
-# Use an official PHP Apache image as the base image
-FROM php:8.2-apache
-
-# Set the working directory in the container
+FROM ubuntu
+RUN apt update
+RUN apt install -y apache2 php libapache2-mod-php php-mysql
 WORKDIR /var/www/html
 
-# Copy all files and directories from the project folder into the container
-COPY . .
+# Copy index.php to the Apache default document root
+COPY . /var/www/html/
 
-# Expose port 80 (default for Apache)
-EXPOSE 80
+EXPOSE 81
+# original command apachectl -D FOREGROUND will not wotk use full path of /usr/sbin/apache2ctl
+CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
