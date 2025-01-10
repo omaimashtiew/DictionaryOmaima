@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db_config.php'); // Ensure this file establishes a PDO connection as $pdo
+include('db_config.php'); // Ensure this file establishes a PDO connection as $pdo 
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

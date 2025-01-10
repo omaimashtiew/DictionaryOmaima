@@ -2,7 +2,7 @@
 $host = 'db';
 $dbname = 'dictionary';
 $username = 'root'; 
-$password = 'nadeen';   
+$password = 'nadeen';  
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
