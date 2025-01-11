@@ -1,4 +1,4 @@
-version: '3.8' # Specify the version
+version: '3.8'
 
 services:
   www:
@@ -15,12 +15,10 @@ services:
   db:
     image: mysql
     restart: always
-    ports:
-      - "3306:3306"
     volumes:
       - ./database.txt:/docker-entrypoint-initdb.d/init.sql
     environment:
-      MYSQL_ROOT_PASSWORD: nadeen # Use environment variable
+      MYSQL_ROOT_PASSWORD: nadeen #Use environment variable
 
   phpmyadmin:
     image: phpmyadmin
