@@ -4,7 +4,7 @@
 GIT_REPO="https://github.com/NadeenMK/Dictionary.git"  
 BRANCH_NAME="main"  
 JENKINS_JOB_URL="http://localhost:8080/job/Dictionary/build"  # Replace with your Jenkins job URL
-JENKINS_AUTH_TOKEN="your-jenkins-auth-token"  # Replace with your Jenkins authentication token
+JENKINS_AUTH_TOKEN="73f194f3c22e01f814d3da692e5d881a"  # Replace with your Jenkins authentication token
 SERVER_SSH="root@172.18.49.151" 
 APP_DIR="/var/www/html/Dictionary"  # Corrected path to application directory
 
