@@ -1,18 +1,17 @@
 <?php
 session_start();
-include('db_config.php'); // Ensure this file establishes a PDO connection as $pdo
+include('db_config.php'); 
 
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve the word from the form
+   
     $word = $_POST['word'];
 
     try {
-        // Use a prepared statement to safely query the database
+       
         $stmt = $pdo->prepare("SELECT definition FROM words WHERE word = :word");
         $stmt->execute(['word' => $word]);
 
-        // Check if the word exists in the dictionary
+        
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $definition = "Definition of '$word': " . htmlspecialchars($row['definition']);
@@ -20,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $definition = "Word not found in the dictionary.";
         }
 
-        // Store result in session and redirect
+      
         $_SESSION['definition'] = $definition;
         header("Location: index.php");
         exit;
@@ -29,10 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Display result after redirect
+
 $message = $_SESSION['definition'] ?? null;
 if ($message) {
-    unset($_SESSION['definition']); // Clear session after displaying
+    unset($_SESSION['definition']); 
 }
 ?>
 
