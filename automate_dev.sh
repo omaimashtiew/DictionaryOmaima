@@ -6,7 +6,7 @@ BRANCH_NAME="main"
 JENKINS_JOB_URL="http://localhost:8080/job/Dictionary/build"  # Replace with your Jenkins job URL
 JENKINS_AUTH_TOKEN="11094f66ea18df9e634c661c1f0d31f354"  # Replace with your Jenkins authentication token
 SERVER_SSH="root@dictionary_www_1"
-APP_DIR="/var/www/html/Dictionary"  # Corrected path to application directory
+APP_DIR="/var/www/html"  # Corrected path to application directory
 
 # Step 4: Develop and commit changes locally (manual step, not automated)
 
