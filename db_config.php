@@ -1,5 +1,5 @@
 <?php
-$host = 'localhost';
+$host = 'db';  // Use 'db' instead of 'localhost' because that's the service name in docker-compose
 $dbname = 'dictionary';
 $username = 'root'; 
 $password = 'nadeen';   

@@ -13,12 +13,14 @@ services:
       - db
 
   db:
-    image: mysql
-    restart: always
-    volumes:
-      - ./database.txt:/docker-entrypoint-initdb.d/init.sql
+    image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: nadeen #Use environment variable
+      MYSQL_ROOT_PASSWORD: nadeen
+      MYSQL_DATABASE: dictionary
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
 
   phpmyadmin:
     image: phpmyadmin

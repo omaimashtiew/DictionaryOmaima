@@ -1,4 +1,4 @@
-CREATE DATABASE dictionary;
+CREATE DATABASE IF NOT EXISTS dictionary;
 USE dictionary;
 CREATE TABLE words(
     id INT AUTO_INCREMENT PRIMARY KEY,
