@@ -51,9 +51,8 @@ fi
 
 # Restart Apache server inside the container
 docker exec dictionary_www_1 bash -c "service apache2 restart"
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to deploy or restart Apache server."
-    exit 1
-fi
+sudo service docker stop
+sudo service docker start
+
 
 echo "Automation complete!"
