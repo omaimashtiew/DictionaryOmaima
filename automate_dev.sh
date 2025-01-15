@@ -31,6 +31,13 @@ fi
 # Optional: Verify deployment inside the Docker container
 echo "Verifying deployment inside the Docker container..."
 
+# Start the Docker container if it's not already running
+docker start dictionary_www_1
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to start Docker container."
+    exit 1
+fi
+
 # Check if the repository already exists in the specified directory
 docker exec dictionary_www_1 bash -c "
 if [ ! -d \"$APP_DIR/.git\" ]; then
