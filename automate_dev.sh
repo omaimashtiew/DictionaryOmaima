@@ -29,16 +29,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Optional: Verify deployment inside the Docker container
-if [ ! -d "$APP_DIR/.git" ]; then
-    echo "Cloning the repository..."
-    docker exec dictionary_www_1 bash -c "git clone $GIT_REPO $APP_DIR"
-else
-    echo "Pulling latest changes from the repository..."
-    docker exec dictionary_www_1 bash -c "cd $APP_DIR && git pull origin $BRANCH_NAME"
-fi
-
-# Restart Apache server
-docker exec dictionary_www_1 bash -c "service apache2 restart"
+echo "Verifying deployment inside the Docker container..."
+docker exec dictionary_www_1 bash -c "cd $APP_DIR  && service apache2 restart"
 if [ $? -ne 0 ]; then
     echo "Error: Failed to deploy or restart Apache server."
     exit 1
