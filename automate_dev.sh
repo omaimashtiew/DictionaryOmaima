@@ -38,21 +38,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Check if the repository already exists in the specified directory
-docker exec dictionary_www_1 bash -c "
-if [ ! -d \"$APP_DIR/.git\" ]; then
-    echo 'Cloning the repository...';
-    git clone $GIT_REPO $APP_DIR;
-else
-    echo 'Pulling latest changes from the repository...';
-    cd $APP_DIR && git pull origin $BRANCH_NAME;
-fi
-"
+# Bring down and rebuild the services using Docker Compose
+echo "Rebuilding Docker services..."
+docker-compose down
+docker-compose up --build -d
 
-# Restart Apache server inside the container
-docker exec dictionary_www_1 bash -c "service apache2 restart"
-sudo service docker stop
-sudo service docker start
-
+# Check if the services are up and running
+docker ps
 
 echo "Automation complete!"
