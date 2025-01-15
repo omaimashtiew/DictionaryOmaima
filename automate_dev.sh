@@ -38,10 +38,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Bring down and rebuild the services using Docker Compose
-echo "Rebuilding Docker services..."
-docker-compose down
-docker-compose up --build -d
+# Call deploy.sh to handle Docker container rebuilding and restarting
+echo "Calling deploy.sh to rebuild Docker containers..."
+./deploy.sh
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to execute deploy.sh."
+    exit 1
+fi
 
 # Check if the services are up and running
 docker ps
