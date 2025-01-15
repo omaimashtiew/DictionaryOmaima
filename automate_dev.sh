@@ -6,7 +6,7 @@ BRANCH_NAME="main"
 JENKINS_JOB_URL="http://localhost:8080/job/Dictionary/build"  # Replace with your Jenkins job URL
 JENKINS_AUTH_TOKEN="11094f66ea18df9e634c661c1f0d31f354"  # Replace with your Jenkins authentication token
 SERVER_SSH="root@dictionary_www_1"
-APP_DIR="/var/www/html"  # Corrected path to application directory
+APP_DIR="/var/www/html/Dictionary"  # Corrected path to application directory
 
 # Step 4: Develop and commit changes locally (manual step, not automated)
 
@@ -30,7 +30,20 @@ fi
 
 # Optional: Verify deployment inside the Docker container
 echo "Verifying deployment inside the Docker container..."
-docker exec dictionary_www_1 bash -c "cd $APP_DIR  && service apache2 restart"
+
+# Check if the repository already exists in the specified directory
+docker exec dictionary_www_1 bash -c "
+if [ ! -d \"$APP_DIR/.git\" ]; then
+    echo 'Cloning the repository...';
+    git clone $GIT_REPO $APP_DIR;
+else
+    echo 'Pulling latest changes from the repository...';
+    cd $APP_DIR && git pull origin $BRANCH_NAME;
+fi
+"
+
+# Restart Apache server inside the container
+docker exec dictionary_www_1 bash -c "service apache2 restart"
 if [ $? -ne 0 ]; then
     echo "Error: Failed to deploy or restart Apache server."
     exit 1
