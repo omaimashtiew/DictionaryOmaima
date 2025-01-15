@@ -4,7 +4,7 @@
 GIT_REPO="https://github.com/NadeenMK/Dictionary.git"  
 BRANCH_NAME="main"  
 JENKINS_JOB_URL="http://localhost:8080/job/Dictionary/build"  # Replace with your Jenkins job URL
-JENKINS_AUTH_TOKEN="73f194f3c22e01f814d3da692e5d881a"  # Replace with your Jenkins authentication token
+JENKINS_AUTH_TOKEN="76be6ae65edfffd617eb73ce121b299d"  # Replace with your Jenkins authentication token
 SERVER_SSH="root@172.18.49.151" 
 APP_DIR="/var/www/html/Dictionary"  # Corrected path to application directory
 
@@ -22,7 +22,7 @@ fi
 
 # Step 6: Trigger Jenkins job to pull, compile, run, and deploy
 echo "Triggering Jenkins job..."
-curl -X POST "$JENKINS_JOB_URL" --user "omaima shtiwe:$JENKINS_AUTH_TOKEN" --data-urlencode "token=$JENKINS_AUTH_TOKEN"
+curl -X POST "$JENKINS_JOB_URL/build?token=$JENKINS_AUTH_TOKEN" --user "omaima.shtiwe:$JENKINS_AUTH_TOKEN"
 if [ $? -ne 0 ]; then
     echo "Error: Failed to trigger Jenkins job."
     exit 1
