@@ -4,8 +4,9 @@
 GIT_REPO="https://github.com/NadeenMK/Dictionary.git"  
 BRANCH_NAME="main"  
 JENKINS_JOB_URL="http://localhost:8080/job/Dictionary/build"  # Replace with your Jenkins job URL
-JENKINS_AUTH_TOKEN="76be6ae65edfffd617eb73ce121b299d"  # Replace with your Jenkins authentication token
-APP_DIR="/var/www/html/Dictionary"  # Path inside the Docker container
+JENKINS_AUTH_TOKEN="11094f66ea18df9e634c661c1f0d31f354"  # Replace with your Jenkins authentication token
+SERVER_SSH="root@dictionary_www_1"
+APP_DIR="/var/www/html/Dictionary"  # Corrected path to application directory
 
 # Step 4: Develop and commit changes locally (manual step, not automated)
 
@@ -21,13 +22,13 @@ fi
 
 # Step 6: Trigger Jenkins job to pull, compile, run, and deploy
 echo "Triggering Jenkins job..."
-curl -X POST "$JENKINS_JOB_URL/build?token=$JENKINS_AUTH_TOKEN" --user "omaima.shtiwe:$JENKINS_AUTH_TOKEN"
+curl -X POST "$JENKINS_JOB_URL/build?token=$JENKINS_AUTH_TOKEN" --user "omaima:$JENKINS_AUTH_TOKEN"
 if [ $? -ne 0 ]; then
     echo "Error: Failed to trigger Jenkins job."
     exit 1
 fi
 
-# Step 7: Run commands inside the Docker container
+# Optional: Verify deployment inside the Docker container
 echo "Verifying deployment inside the Docker container..."
 docker exec dictionary_www_1 bash -c "cd $APP_DIR && git pull origin $BRANCH_NAME && service apache2 restart"
 if [ $? -ne 0 ]; then
